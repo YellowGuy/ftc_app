@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -64,6 +65,14 @@ public class HardwarePushbot
     public DcMotor  frontrightDrive     = null;
     public DcMotor  backrightDrive      = null;
     public DcMotor  backleftDrive       = null;
+    public DcMotor  arm                 = null;
+    public DcMotor  out                 = null;
+    public DcMotor  lift                = null;
+    public Servo    left                = null;
+    public Servo    right               = null;
+
+    //Mid Position for Servo
+    public static final double MID_SERVO       =  0.5 ;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -84,16 +93,31 @@ public class HardwarePushbot
         frontrightDrive       = hwMap.get(DcMotor.class, "front_right_drive");
         backleftDrive         = hwMap.get(DcMotor.class, "back_left_drive");
         backrightDrive        = hwMap.get(DcMotor.class, "back_right_drive");
+        arm                   = hwMap.get(DcMotor.class, "arm");
+        out                   = hwMap.get(DcMotor.class, "out");
+        lift                  = hwMap.get(DcMotor.class, "lift");
+        left                  = hwMap.get(Servo.class, "left");
+        right                 = hwMap.get(Servo.class, "right");
 
+        //Direction
         frontleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         backleftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         backrightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        out.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.FORWARD);
+
         // Set all motors to zero power
         frontleftDrive.setPower(0);
         frontrightDrive.setPower(0);
         backleftDrive.setPower(0);
         backrightDrive.setPower(0);
+        arm.setPower(0);
+        out.setPower(0);
+        lift.setPower(0);
+        left.setPosition(MID_SERVO);
+        right.setPosition(MID_SERVO);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -101,7 +125,9 @@ public class HardwarePushbot
         frontrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        out.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // Define and initialize ALL installed servos.
 
     }

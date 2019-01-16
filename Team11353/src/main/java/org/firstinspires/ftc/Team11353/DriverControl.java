@@ -161,6 +161,11 @@ public class DriverControl extends OpMode
         double z  =  gamepad1.right_stick_x;
 
 
+        //Arm and Out power doubles
+        double rotate = gamepad2.left_stick_y;
+        double extend = -gamepad2.right_stick_y;
+
+
         //Math for robot orientated drive. The Z axis offset is converted to radians. Then by multiplying the y and x values by the
         //cos and sin of the gyro, we can "rotate" the gamepad left stick, so forward on the sick is always away
         double pi = 3.14159286;
@@ -174,6 +179,34 @@ public class DriverControl extends OpMode
         robot.frontrightDrive.setPower(-forward-side-z);
         robot.backleftDrive.setPower(forward+side-z);
         robot.backrightDrive.setPower(-forward+side-z);
+
+
+        //Assigning arm and out power
+        robot.arm.setPower(rotate);
+        robot.out.setPower(extend);
+
+
+        //Lift Power
+        if(gamepad2.y)
+            robot.lift.setPower(1);
+        else if (gamepad2.a)
+            robot.lift.setPower(-1);
+        else
+            robot.lift.setPower(0);
+
+
+        //Servo Position
+        final double SPEED = .1;
+        double OFF_SET     = .5;
+        if (gamepad1.a)
+            OFF_SET += SPEED;
+        else if (gamepad1.right_bumper)
+            OFF_SET -= SPEED;
+
+
+        //Servo Asignments
+        robot.left.setPosition(robot.MID_SERVO + OFF_SET);
+        robot.right.setPosition(robot.MID_SERVO - OFF_SET);
 
 
         // If Y is pressed, the z will reset
