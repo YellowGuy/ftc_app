@@ -46,21 +46,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 
-
-/**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
- * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
- * The names of OpModes appear on the menu of the FTC Driver Station.
- * When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all iterative OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
 @TeleOp(name="Driver_Control", group="Iterative Opmode")
 //@Disabled
 public class DriverControl extends OpMode
@@ -196,17 +181,16 @@ public class DriverControl extends OpMode
 
 
         //Servo Position
-        final double SPEED = .1;
-        double OFF_SET     = .5;
-        if (gamepad1.a)
-            OFF_SET += SPEED;
-        else if (gamepad1.right_bumper)
-            OFF_SET -= SPEED;
-
-
-        //Servo Asignments
-        robot.left.setPosition(robot.MID_SERVO + OFF_SET);
-        robot.right.setPosition(robot.MID_SERVO - OFF_SET);
+       if (gamepad2.right_bumper){
+           robot.left.setPosition(1);
+           robot.right.setPosition(0);}
+       else if (gamepad2.left_bumper){
+           robot.left.setPosition(0);
+           robot.right.setPosition(1);}
+       else{
+           robot.left.setPosition(.5);
+           robot.right.setPosition(.5);
+       }
 
 
         // If Y is pressed, the z will reset

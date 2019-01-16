@@ -42,6 +42,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
+
 /**
  * This is NOT an opmode.
  *
@@ -71,8 +79,19 @@ public class HardwarePushbot
     public Servo    left                = null;
     public Servo    right               = null;
 
+
+
     //Mid Position for Servo
     public static final double MID_SERVO       =  0.5 ;
+
+
+    //Vuforia stuff
+    public static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    public static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+    public static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+    public static final String VUFORIA_KEY = "AQIw0CL/////AAABmVad/6kqB0Z5raIXZ2A27Y6G7TPsicTGxUU+GVOmNtC/8RLmGuFQM7q7Jb3EnSu1ocZvyXuEVH4Sm2NB55t8B7Zbu+PdFq3bxVypwOBdP95vv1p6bc1DPIGNkHN43kpVygzqw5qOWZMOHrurUxfrzlPF4dHIf5AORgQ2fhuJwVv0zUW2Ea1SaLneUbmeukI0CptofJhZB1lyHOy52EekBCZxjUdEeUSWRrGHS8+r8HdnO7atPM8jNugrPQk2PFKy7jAbED8ClOrcW9dElYNKmNc3thHcL13hwVWtryv7FmIylJJJ2H6iWJRnYMgmg5wx99W2Vml7fXpaltyLOcKqa2lBVT1jj+kIRDuYSFDGAr6e";
+    public VuforiaLocalizer vuforia;
+    public TFObjectDetector tfod;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
